@@ -104,7 +104,7 @@ function! s:RunInSplitWindow(path)
     else
         let command = join(map(split(cmd), 'expand(v:val)'))
         let winnr = bufwinnr('Pyut.Verbose')
-        silent! execute  winnr < 0 ? 'botright new ' . 'Pyut.Verbose' : winnr . 'wincmd w'
+        silent! execute  winnr < 0 ? 'botright new ' . 'Verbose.pyut' : winnr . 'wincmd w'
         setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pyut
         silent! execute 'silent %!'. command
         silent! execute 'resize ' . line('$')
