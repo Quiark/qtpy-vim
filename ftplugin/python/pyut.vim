@@ -15,7 +15,8 @@ endif
 "let g:class_delimiter = "::"
 "let g:method_delimiter = "::"
   " for use with Nose Tests
-let g:cmd_to_run = "nosetests " "Nose Tests
+"let g:cmd_to_run = "nosetests " "Nose Tests
+let g:cmd_to_run = "eatmydata ./run_tests.sh " "Nose Tests
 let g:class_delimiter = ":"
 let g:method_delimiter = "."
 
@@ -112,7 +113,9 @@ function! s:RunInSplitWindow(path)
         let session = split(g:pyut_last_session, '\n')
         call append(0, session)
         silent! execute 'resize ' . line('$')
+        " Do both commands so the last line of output is flush with bottom
         silent! execute 'normal gg'
+        silent! execute 'normal G'
         silent! execute 'nnoremap <silent> <buffer> q :q! <CR>'
     endif
 endfunction
@@ -130,7 +133,9 @@ function! s:LastSession()
     let session = split(g:pyut_last_session, '\n')
     call append(0, session)
 	silent! execute 'resize ' . line('$')
+    " Do both commands so the last line of output is flush with bottom
     silent! execute 'normal gg'
+    silent! execute 'normal G'
     nnoremap <silent> <buffer> q       :call <sid>ClearAll(1)<CR>
     nnoremap <silent> <buffer> <Enter> :call <sid>ClearAll(1)<CR>
     exe 'wincmd p'
