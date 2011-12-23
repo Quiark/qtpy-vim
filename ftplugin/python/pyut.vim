@@ -106,8 +106,13 @@ function! s:RunInSplitWindow(path)
         let winnr = bufwinnr('Pyut.Verbose')
         silent! execute  winnr < 0 ? 'botright new ' . 'Verbose.pyut' : winnr . 'wincmd w'
         setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pyut
-        silent! execute 'silent %!'. command
+
+        let out = system(command)
+        let g:pyut_last_session   = out
+        let session = split(g:pyut_last_session, '\n')
+        call append(0, session)
         silent! execute 'resize ' . line('$')
+        silent! execute 'normal gg'
         silent! execute 'nnoremap <silent> <buffer> q :q! <CR>'
     endif
 endfunction
