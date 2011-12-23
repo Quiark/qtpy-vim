@@ -1,27 +1,26 @@
-" File:        pytest.vim
-" Description: Runs the current test Class/Method/Function/File with
-"              py.test
+" File:        pyut.vim
+" Description: Runs the current test Class/Method/Function/File
 " Maintainer:  Alex Meade
 "============================================================================
 
 
-if exists("g:loaded_pytest") || &cp
+if exists("g:loaded_pyut") || &cp
   finish
 endif
 
 
 "Configuration Global variables for shell execution
   " for use with Py.Test
-"let g:cmd_to_run = "py.test --tb=short " "py.tests
-"let g:class_delimiter = "::"
-"let g:method_delimiter = "::"
+let g:cmd_to_run = "py.test --tb=short " "py.tests
+let g:class_delimiter = "::"
+let g:method_delimiter = "::"
   " for use with Nose Tests
-let g:cmd_to_run = "nosetests " "Nose Tests
-let g:class_delimiter = ":"
-let g:method_delimiter = "."
+"let g:cmd_to_run = "nosetests " "Nose Tests
+"let g:class_delimiter = ":"
+"let g:method_delimiter = "."
 
 " Global variables
-let g:pytest_last_session      = ""
+let g:pyut_last_session      = ""
 
 
 function! s:Echo(msg, ...)
@@ -118,9 +117,9 @@ function! s:RunInSplitWindow(path)
         call conque_term#open(cmd, ['split', 'resize 20'], 0)
     else
         let command = join(map(split(cmd), 'expand(v:val)'))
-        let winnr = bufwinnr('PytestVerbose.pytest')
-        silent! execute  winnr < 0 ? 'botright new ' . 'PytestVerbose.pytest' : winnr . 'wincmd w'
-        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pytest
+        let winnr = bufwinnr('Pyut.Verbose')
+        silent! execute  winnr < 0 ? 'botright new ' . 'Pyut.Verbose' : winnr . 'wincmd w'
+        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pyut
         silent! execute 'silent %!'. command
         silent! execute 'resize ' . line('$')
         silent! execute 'nnoremap <silent> <buffer> q :q! <CR>'
@@ -130,14 +129,14 @@ endfunction
 
 function! s:LastSession()
     call s:ClearAll()
-    if (len(g:pytest_last_session) == 0)
+    if (len(g:pyut_last_session) == 0)
         call s:Echo("There is currently no saved last session to display")
         return
     endif
-	let winnr = bufwinnr('LastSession.pytest')
-	silent! execute  winnr < 0 ? 'botright new ' . 'LastSession.pytest' : winnr . 'wincmd w'
-	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pytest
-    let session = split(g:pytest_last_session, '\n')
+	let winnr = bufwinnr('LastSession.pyut')
+	silent! execute  winnr < 0 ? 'botright new ' . 'LastSession.pyut' : winnr . 'wincmd w'
+	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pyut
+    let session = split(g:pyut_last_session, '\n')
     call append(0, session)
 	silent! execute 'resize ' . line('$')
     silent! execute 'normal gg'
@@ -148,7 +147,7 @@ endfunction
 
 
 function! s:ToggleLastSession()
-	let winnr = bufwinnr('LastSession.pytest')
+	let winnr = bufwinnr('LastSession.pyut')
     if (winnr == -1)
         call s:LastSession()
     else
@@ -160,7 +159,7 @@ endfunction
 
 
 function! s:ClearAll(...)
-    let bufferL = [ 'Fails.pytest', 'LastSession.pytest', 'PytestVerbose.pytest' ]
+    let bufferL = [ 'LastSession.pyut', 'Verbose.pyut' ]
     for b in bufferL
         let _window = bufwinnr(b)
         if (_window != -1)
@@ -180,15 +179,15 @@ endfunction
 
 function! s:ResetAll()
     " Resets all global vars
-    let g:pytest_last_session      = ""
+    let g:pyut_last_session      = ""
 endfunction!
 
 
 function! s:RunPyTest(path)
-    let g:pytest_last_session = ""
+    let g:pyut_last_session = ""
     let cmd = g:cmd_to_run . a:path
     let out = system(cmd)
-    let g:pytest_last_session   = out
+    let g:pyut_last_session   = out
 
     if v:shell_error
         call s:RedBar()
@@ -234,13 +233,9 @@ function! s:ThisMethod(verbose, ...)
     endif
 
     let path =  abspath . g:class_delimiter . c_name . g:method_delimiter . m_name
-    let message = "py.test ==> Running test for method " . m_name
+    let message = "Running test for method " . m_name
     call s:Echo(message, 1)
 
-    if ((a:1 == '--pdb') || (a:1 == '-s'))
-        call s:Pdb(path, a:1)
-        return
-    endif
     if (a:verbose == 1)
         call s:RunInSplitWindow(path)
     else
@@ -259,15 +254,10 @@ function! s:ThisFunction(verbose, ...)
         call s:Echo("Unable to find a matching function for testing")
         return
     endif
-    let message  = "py.test ==> Running tests for function " . c_name
+    let message  = "Running tests for function " . c_name
     call s:Echo(message, 1)
 
     let path = abspath . g:class_delimiter . c_name
-
-    if ((a:1 == '--pdb') || (a:1 == '-s'))
-        call s:Pdb(path, a:1)
-        return
-    endif
 
     if (a:verbose == 1)
         call s:RunInSplitWindow(path)
@@ -287,15 +277,10 @@ function! s:ThisClass(verbose, ...)
         call s:Echo("Unable to find a matching class for testing")
         return
     endif
-    let message  = "py.test ==> Running tests for class " . c_name
+    let message  = "Running tests for class " . c_name
     call s:Echo(message, 1)
 
     let path = abspath . g:class_delimiter . c_name
-
-    if ((a:1 == '--pdb') || (a:1 == '-s'))
-        call s:Pdb(path, a:1)
-        return
-    endif
 
     if (a:verbose == 1)
         call s:RunInSplitWindow(path)
@@ -307,13 +292,8 @@ endfunction
 
 function! s:ThisFile(verbose, ...)
     call s:ClearAll()
-    call s:Echo("py.test ==> Running tests for entire file ", 1)
+    call s:Echo("Running tests for entire file ", 1)
     let abspath     = s:CurrentPath()
-
-    if ((a:1 == '--pdb') || (a:1 == '-s'))
-        call s:Pdb(abspath, a:1)
-        return
-    endif
 
     if (a:verbose == 1)
         call s:RunInSplitWindow(abspath)
@@ -323,18 +303,8 @@ function! s:ThisFile(verbose, ...)
 endfunction
 
 
-function! s:Pdb(path, ...)
-    let pdb_command = "py.test " . a:1 . " " . a:path
-    if exists("g:ConqueTerm_Loaded")
-        call conque_term#open(pdb_command, ['split', 'resize 20'], 0)
-    else
-        exe ":!" . pdb_command
-    endif
-endfunction
-
-
 function! s:Version()
-    call s:Echo("pytest.vim version 1.1.0dev", 1)
+    call s:Echo("pyut.vim version 1.0.0dev", 1)
 endfunction
 
 
@@ -343,33 +313,27 @@ function! s:Completion(ArgLead, CmdLine, CursorPos)
     let optional     = "verbose\nclear\n"
     let reports      = "fails\nsession\nend\n"
     let pyversion    = "version\n"
-    let pdb          = "--pdb\n-s\n"
-    return test_objects . reports . optional . pyversion . pdb
+    return test_objects . reports . optional . pyversion
 endfunction
 
 
 function! s:Proxy(action, ...)
     " Some defaults
     let verbose = 0
-    let pdb     = 'False'
 
     if (a:0 > 0)
         if (a:1 == 'verbose')
             let verbose = 1
-        elseif (a:1 == '--pdb')
-            let pdb = '--pdb'
-        elseif (a:1 == '-s')
-            let pdb = '-s'
         endif
     endif
     if (a:action == "class")
-        call s:ThisClass(verbose, pdb)
+        call s:ThisClass(verbose)
     elseif (a:action == "method")
-        call s:ThisMethod(verbose, pdb)
+        call s:ThisMethod(verbose)
     elseif (a:action == "function")
-        call s:ThisFunction(verbose, pdb)
+        call s:ThisFunction(verbose)
     elseif (a:action == "file")
-        call s:ThisFile(verbose, pdb)
+        call s:ThisFile(verbose)
     elseif (a:action == "fails")
         call s:ToggleFailWindow()
     elseif (a:action == "session")
@@ -380,10 +344,10 @@ function! s:Proxy(action, ...)
     elseif (a:action == "version")
         call s:Version()
     else
-        call s:Echo("Not a valid Pytest option ==> " . a:action)
+        call s:Echo("Not a valid Pyut option ==> " . a:action)
     endif
 endfunction
 
 
-command! -nargs=+ -complete=custom,s:Completion Pytest call s:Proxy(<f-args>)
+command! -nargs=+ -complete=custom,s:Completion Pyut call s:Proxy(<f-args>)
 
