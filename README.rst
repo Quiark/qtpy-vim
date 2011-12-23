@@ -3,7 +3,7 @@ pyut.vim
 A simple way of running python unit tests from within VIM based on the cursor
 location.
 
-Useful for immediately receiving feedback as you write tests, despite what test
+Useful for receiving immediate feedback as you write tests, despite what test
 runner or framework your project uses to run its tests.
 
 
@@ -80,7 +80,7 @@ Shell Support
 This plugin provides a way to have a better shell experience when running
 `verbose` or `pdb` flags by using the `Conque.vim` plugin. If you have this
 most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?script_id=2771)
-then `pytest.vim` will use that instead of Vim's own dumb shell environment.
+then `pyut.vim` will use that instead of Vim's own dumb shell environment.
 
 `clear`
 -------
@@ -94,7 +94,7 @@ License
 -------
 
 MIT
-Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
+Copyright (c) 2011 Alex Meade <hatboy112 [at] yahoo [dot] com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -114,3 +114,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
+Attribution
+-------
+
+The core functionality of this plugin was brought over from pytest.vim
+Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
