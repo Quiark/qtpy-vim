@@ -1,5 +1,5 @@
 " File:        pyut.vim
-" Description: Runs the current test Class/Method/Function/File
+" Description: Runs the current test Class/Method/File
 " Maintainer:  Alex Meade
 "============================================================================
 
@@ -11,13 +11,14 @@ endif
 
 "Configuration Global variables for shell execution
   " for use with Py.Test
-let g:cmd_to_run = "py.test --tb=short " "py.tests
-let g:class_delimiter = "::"
-let g:method_delimiter = "::"
+"let g:cmd_to_run = "py.test --tb=short " "py.tests
+"let g:class_delimiter = "::"
+"let g:method_delimiter = "::"
   " for use with Nose Tests
-"let g:cmd_to_run = "nosetests " "Nose Tests
-"let g:class_delimiter = ":"
-"let g:method_delimiter = "."
+let g:cmd_to_run = "nosetests " "Nose Tests
+let g:class_delimiter = ":"
+let g:method_delimiter = "."
+
 
 " Global variables
 let g:pyut_last_session      = ""
@@ -48,8 +49,6 @@ function! s:FindPythonObject(obj)
         let objregexp  = '\v^\s*(.*class)\s+(\w+)\s*'
     elseif (a:obj == "method")
         let objregexp = '\v^\s*(.*def)\s+(\w+)\s*\(\s*(self[^)]*)'
-    else
-        let objregexp = '\v^\s*(.*def)\s+(\w+)\s*\(\s*(.*self)@!'
     endif
 
     let flag = "Wb"
@@ -83,19 +82,6 @@ function! s:NameOfCurrentMethod()
     let save_cursor = getpos(".")
     normal $<cr>
     let find_object = s:FindPythonObject('method')
-    if (find_object)
-        let line = getline('.')
-        call setpos('.', save_cursor)
-        let match_result = matchlist(line, ' *def \+\(\w\+\)')
-        return match_result[1]
-    endif
-endfunction
-
-
-function! s:NameOfCurrentFunction()
-    let save_cursor = getpos(".")
-    normal $<cr>
-    let find_object = s:FindPythonObject('function')
     if (find_object)
         let line = getline('.')
         call setpos('.', save_cursor)
@@ -216,84 +202,47 @@ function! s:GreenBar()
 endfunction
 
 
-function! s:ThisMethod(verbose, ...)
+function! s:GetPath(action, ...)
     let save_cursor = getpos('.')
     call s:ClearAll()
-    let m_name  = s:NameOfCurrentMethod()
-    let c_name  = s:NameOfCurrentClass()
-    let abspath = s:CurrentPath()
-    if (strlen(m_name) == 1)
-        call setpos('.', save_cursor)
-        call s:Echo("Unable to find a matching method for testing")
-        return
-    elseif (strlen(c_name) == 1)
-        call setpos('.', save_cursor)
-        call s:Echo("Unable to find a matching class for testing")
-        return
-    endif
+    let abspath     = s:CurrentPath()
 
-    let path =  abspath . g:class_delimiter . c_name . g:method_delimiter . m_name
-    let message = "Running test for method " . m_name
-    call s:Echo(message, 1)
+    if (a:action == "class")
+        let c_name = s:NameOfCurrentClass()
+        if (strlen(c_name) == 1)
+            call setpos('.', save_cursor)
+            call s:Echo("Unable to find a matching class for testing")
+            return ""
+        endif
+        return abspath . g:class_delimiter . c_name
 
-    if (a:verbose == 1)
-        call s:RunInSplitWindow(path)
-    else
-       call s:RunPyTest(path)
-    endif
+    elseif (a:action == "method")
+        let c_name = s:NameOfCurrentClass()
+        let m_name  = s:NameOfCurrentMethod()
+        if (strlen(m_name) == 1)
+            call setpos('.', save_cursor)
+            call s:Echo("Unable to find a matching method for testing")
+            return ""
+        elseif (strlen(c_name) == 1)
+            call setpos('.', save_cursor)
+            call s:Echo("Unable to find a matching class for testing")
+            return ""
+        endif
+        return abspath . g:class_delimiter . c_name . g:method_delimiter . m_name
+
+    elseif (a:action == "file")
+        return abspath
 endfunction
 
 
-function! s:ThisFunction(verbose, ...)
-    let save_cursor = getpos('.')
+
+function! s:RunTests(verbose, action, ...)
     call s:ClearAll()
-    let c_name      = s:NameOfCurrentFunction()
-    let abspath     = s:CurrentPath()
-    if (strlen(c_name) == 1)
-        call setpos('.', save_cursor)
-        call s:Echo("Unable to find a matching function for testing")
+    call s:Echo("Running tests for " . a:action, 1)
+    let abspath     = s:GetPath(a:action) 
+    if strlen(abspath) == 0
         return
     endif
-    let message  = "Running tests for function " . c_name
-    call s:Echo(message, 1)
-
-    let path = abspath . g:class_delimiter . c_name
-
-    if (a:verbose == 1)
-        call s:RunInSplitWindow(path)
-    else
-        call s:RunPyTest(path)
-    endif
-endfunction
-
-
-function! s:ThisClass(verbose, ...)
-    let save_cursor = getpos('.')
-    call s:ClearAll()
-    let c_name      = s:NameOfCurrentClass()
-    let abspath     = s:CurrentPath()
-    if (strlen(c_name) == 1)
-        call setpos('.', save_cursor)
-        call s:Echo("Unable to find a matching class for testing")
-        return
-    endif
-    let message  = "Running tests for class " . c_name
-    call s:Echo(message, 1)
-
-    let path = abspath . g:class_delimiter . c_name
-
-    if (a:verbose == 1)
-        call s:RunInSplitWindow(path)
-    else
-        call s:RunPyTest(path)
-    endif
-endfunction
-
-
-function! s:ThisFile(verbose, ...)
-    call s:ClearAll()
-    call s:Echo("Running tests for entire file ", 1)
-    let abspath     = s:CurrentPath()
 
     if (a:verbose == 1)
         call s:RunInSplitWindow(abspath)
@@ -327,13 +276,11 @@ function! s:Proxy(action, ...)
         endif
     endif
     if (a:action == "class")
-        call s:ThisClass(verbose)
+        call s:RunTests(verbose, a:action)
     elseif (a:action == "method")
-        call s:ThisMethod(verbose)
-    elseif (a:action == "function")
-        call s:ThisFunction(verbose)
+        call s:RunTests(verbose, a:action)
     elseif (a:action == "file")
-        call s:ThisFile(verbose)
+        call s:RunTests(verbose, a:action)
     elseif (a:action == "fails")
         call s:ToggleFailWindow()
     elseif (a:action == "session")

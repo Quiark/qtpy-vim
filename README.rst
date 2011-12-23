@@ -27,12 +27,11 @@ These arguments are::
 
     class
     method
-    function
     file
 
 
 As you may expect, those will focus on the tests for the current class, method,
-function or the whole file.
+or the whole file.
 
 If you are in a class and want to run all the tests for that class, you would
 call this plugin like::
