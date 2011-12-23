@@ -15,8 +15,7 @@ endif
 "let g:class_delimiter = "::"
 "let g:method_delimiter = "::"
   " for use with Nose Tests
-"let g:cmd_to_run = "nosetests " "Nose Tests
-let g:cmd_to_run = "eatmydata ./run_tests.sh " "Nose Tests
+let g:cmd_to_run = "nosetests " "Nose Tests
 let g:class_delimiter = ":"
 let g:method_delimiter = "."
 
