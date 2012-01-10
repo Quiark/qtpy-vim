@@ -57,14 +57,14 @@ to close it.
 When tests are successful a green bar appears. If you have any number of fails
 you get a red bar with a line-by-line list of line numbers and errors.
 
-I strongly encourage a mapping for the above actions. For example, if you
-wanted leader (the leader key is '\' by default) mappings you would 
-probably do them like this::
+I recommend mapping keys to Pyut commands for easy running. To do so, insert
+commands like this into your .vimrc::
 
     " Pyut
-    nmap <silent><Leader>m <Esc>:Pyut method verbose<CR>
-    nmap <silent><Leader>c <Esc>:Pyut class verbose<CR>
-    nmap <silent><Leader>t <Esc>:Pyut session<CR>
+    nnoremap <F8> :Pyut method verbose<CR>
+    nnoremap <F9> :Pyut session<CR>
+
+    nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
 
 
 Output
