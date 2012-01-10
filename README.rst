@@ -61,11 +61,12 @@ I recommend mapping keys to Pyut commands for easy running. To do so, insert
 commands like this into your .vimrc::
 
     " Pyut
-    nnoremap <F8> :Pyut method verbose<CR>
-    nnoremap <F9> :Pyut session<CR>
+    au FileType python nnoremap <F8> :Pyut method verbose<CR>
+    au FileType python nnoremap <F9> :Pyut session<CR>
 
-    nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
+    au FileType python nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
 
+The 'au FileType python' ensures these mappings only occur in a python file. 
 
 Output
 ------
