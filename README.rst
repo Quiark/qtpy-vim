@@ -62,9 +62,9 @@ wanted leader (the leader key is '\' by default) mappings you would
 probably do them like this::
 
     " Pyut
-    nmap <silent><Leader>f <Esc>:Pyut file<CR>
-    nmap <silent><Leader>c <Esc>:Pyut class<CR>
-    nmap <silent><Leader>m <Esc>:Pyut method<CR>
+    nmap <silent><Leader>m <Esc>:Pyut method verbose<CR>
+    nmap <silent><Leader>c <Esc>:Pyut class verbose<CR>
+    nmap <silent><Leader>t <Esc>:Pyut session<CR>
 
 
 Output
@@ -81,12 +81,12 @@ Pyut is configured to work with nosetests by default, however, using pyut with
 other unit tests runners is simple. Just set the necessary variables in your
 vimrc. 
 
-For example, insert these lines into your .vimrc to use Pyut with Py.Test
+For example, insert these lines into your .vimrc to use Pyut with Py.Test::
 
-" for use with Py.Test
-let g:pyut_shell_command = "py.test --tb=short " "py.tests
-let g:pyut_class_delimiter = "::"
-let g:pyut_method_delimiter = "::"
+    " for use with Py.Test
+    let g:pyut_shell_command = "py.test --tb=short " "py.tests
+    let g:pyut_class_delimiter = "::"
+    let g:pyut_method_delimiter = "::"
 
 The delimiter variables are used with constructing the test path to pass into
 the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod"
