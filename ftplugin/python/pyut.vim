@@ -105,8 +105,8 @@ function! s:RunInSplitWindow(path)
         call conque_term#open(cmd, ['split', 'resize 20'], 0)
     else
         let command = join(map(split(cmd), 'expand(v:val)'))
-        let winnr = bufwinnr('Pyut.Verbose')
-        silent! execute  winnr < 0 ? 'botright new ' . 'Verbose.pyut' : winnr . 'wincmd w'
+        let winnr = bufwinnr('LastSession.pyut')
+        silent! execute  winnr < 0 ? 'botright new ' . 'LastSession.pyut' : winnr . 'wincmd w'
         setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=pyut
 
         let out = system(command)
@@ -268,7 +268,7 @@ endfunction
 
 
 function! s:Version()
-    call s:Echo("pyut.vim version 0.4.1dev", 1)
+    call s:Echo("pyut.vim version 0.4.2dev", 1)
 endfunction
 
 
