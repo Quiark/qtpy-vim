@@ -8,8 +8,9 @@ if exists("g:loaded_pyut") || &cp
   finish
 endif
 
+"default to Nose Tests
 if(!exists("g:pyut_shell_command"))
-    let g:pyut_shell_command = "nosetests " "Nose Tests
+    let g:pyut_shell_command = "nosetests"
 endif
 
 if(!exists("g:pyut_class_delimiter"))
@@ -216,6 +217,7 @@ function! s:GetPath(action, ...)
     let save_cursor = getpos('.')
     call s:ClearAll()
     let abspath     = s:CurrentPath()
+    let toReturn = ""
 
     if (a:action == "class")
         let c_name = s:NameOfCurrentClass()
@@ -224,7 +226,7 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        return abspath . g:pyut_class_delimiter . c_name
+        let toReturn = abspath . g:pyut_class_delimiter . c_name
 
     elseif (a:action == "method")
         let c_name = s:NameOfCurrentClass()
@@ -238,10 +240,13 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        return abspath . g:pyut_class_delimiter . c_name . g:pyut_method_delimiter . m_name
+        let toReturn = abspath . g:pyut_class_delimiter . c_name . g:pyut_method_delimiter . m_name
 
     elseif (a:action == "file")
-        return abspath
+        let toReturn =  abspath
+    endif
+
+    return " " . toReturn
 endfunction
 
 
@@ -263,7 +268,7 @@ endfunction
 
 
 function! s:Version()
-    call s:Echo("pyut.vim version 0.3.0dev", 1)
+    call s:Echo("pyut.vim version 0.4.0dev", 1)
 endfunction
 
 

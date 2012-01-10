@@ -84,7 +84,7 @@ vimrc.
 For example, insert these lines into your .vimrc to use Pyut with Py.Test::
 
     " for use with Py.Test
-    let g:pyut_shell_command = "py.test --tb=short " "py.tests
+    let g:pyut_shell_command = "py.test --tb=short" "py.tests
     let g:pyut_class_delimiter = "::"
     let g:pyut_method_delimiter = "::"
 
