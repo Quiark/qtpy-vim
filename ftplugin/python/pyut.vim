@@ -263,7 +263,7 @@ endfunction
 
 
 function! s:Version()
-    call s:Echo("pyut.vim version 1.0.0dev", 1)
+    call s:Echo("pyut.vim version 0.3.0dev", 1)
 endfunction
 
 
