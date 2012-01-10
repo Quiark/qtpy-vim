@@ -68,7 +68,7 @@ endfunction
 
 function! s:NameOfCurrentClass()
     let save_cursor = getpos(".")
-    normal $<cr>
+    normal! $<cr>
     let find_object = s:FindPythonObject('class')
     if (find_object)
         let line = getline('.')
@@ -81,7 +81,7 @@ endfunction
 
 function! s:NameOfCurrentMethod()
     let save_cursor = getpos(".")
-    normal $<cr>
+    normal! $<cr>
     let find_object = s:FindPythonObject('method')
     if (find_object)
         let line = getline('.')
@@ -114,8 +114,8 @@ function! s:RunInSplitWindow(path)
         call append(0, session)
         silent! execute 'resize ' . line('$')
         " Do both commands so the last line of output is flush with bottom
-        silent! execute 'normal gg'
-        silent! execute 'normal G'
+        silent! execute 'normal! gg'
+        silent! execute 'normal! G'
         silent! execute 'nnoremap <silent> <buffer> q :q! <CR>'
     endif
 endfunction
@@ -134,8 +134,8 @@ function! s:LastSession()
     call append(0, session)
 	silent! execute 'resize ' . line('$')
     " Do both commands so the last line of output is flush with bottom
-    silent! execute 'normal gg'
-    silent! execute 'normal G'
+    silent! execute 'normal! gg'
+    silent! execute 'normal! G'
     nnoremap <silent> <buffer> q       :call <sid>ClearAll(1)<CR>
     nnoremap <silent> <buffer> <Enter> :call <sid>ClearAll(1)<CR>
     exe 'wincmd p'
