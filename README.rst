@@ -75,6 +75,24 @@ be toggled with::
     :Pyut session
 
 
+Configuration
+-------------
+Pyut is configured to work with nosetests by default, however, using pyut with 
+other unit tests runners is simple. Just set the necessary variables in your
+vimrc. 
+
+For example, insert these lines into your .vimrc to use Pyut with Py.Test
+
+" for use with Py.Test
+let g:pyut_shell_command = "py.test --tb=short " "py.tests
+let g:pyut_class_delimiter = "::"
+let g:pyut_method_delimiter = "::"
+
+The delimiter variables are used with constructing the test path to pass into
+the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod"
+for the example above where the first '::' is the class_delimiter and the second
+is the method_delimiter
+
 Shell Support
 -------------
 This plugin provides a way to have a better shell experience when running

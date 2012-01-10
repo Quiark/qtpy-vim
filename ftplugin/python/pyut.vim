@@ -8,16 +8,17 @@ if exists("g:loaded_pyut") || &cp
   finish
 endif
 
+if(!exists("g:pyut_shell_command"))
+    let g:pyut_shell_command = "nosetests " "Nose Tests
+endif
 
-"Configuration Global variables for shell execution
-  " for use with Py.Test
-"let g:cmd_to_run = "py.test --tb=short " "py.tests
-"let g:class_delimiter = "::"
-"let g:method_delimiter = "::"
-  " for use with Nose Tests
-let g:cmd_to_run = "nosetests " "Nose Tests
-let g:class_delimiter = ":"
-let g:method_delimiter = "."
+if(!exists("g:pyut_class_delimiter"))
+    let g:pyut_class_delimiter = ":"
+endif
+
+if(!exists("g:pyut_method_delimiter"))
+    let g:pyut_method_delimiter = "."
+endif
 
 
 " Global variables
@@ -98,7 +99,7 @@ endfunction
 
 
 function! s:RunInSplitWindow(path)
-    let cmd = g:cmd_to_run . a:path
+    let cmd = g:pyut_shell_command . a:path
     if exists("g:ConqueTerm_Loaded")
         call conque_term#open(cmd, ['split', 'resize 20'], 0)
     else
@@ -180,7 +181,7 @@ endfunction!
 
 function! s:RunPyTest(path)
     let g:pyut_last_session = ""
-    let cmd = g:cmd_to_run . a:path
+    let cmd = g:pyut_shell_command . a:path
     let out = system(cmd)
     let g:pyut_last_session   = out
 
@@ -223,7 +224,7 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        return abspath . g:class_delimiter . c_name
+        return abspath . g:pyut_class_delimiter . c_name
 
     elseif (a:action == "method")
         let c_name = s:NameOfCurrentClass()
@@ -237,7 +238,7 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        return abspath . g:class_delimiter . c_name . g:method_delimiter . m_name
+        return abspath . g:pyut_class_delimiter . c_name . g:pyut_method_delimiter . m_name
 
     elseif (a:action == "file")
         return abspath
