@@ -253,7 +253,7 @@ endfunction
 
 function! s:RunTests(verbose, action, ...)
     call s:ClearAll()
-    call s:Echo("Running tests for " . a:action, 1)
+    call s:Echo("Running tests for " . a:action . "...", 1)
     let abspath     = s:GetPath(a:action) 
     if strlen(abspath) == 0
         return

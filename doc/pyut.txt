@@ -1,27 +1,29 @@
-pyut.vim
-==========
-A simple way of running python unit tests from within VIM based on the cursor
-location.
+*pytest.txt*  Plugin for running python unit tests in vim
+
+Simple approach to visual selection of Python blocks.
+==============================================================================
+CONTENTS                                                      *Pytest-contents*
+
+    1. Intro .......................... |PyutIntro|
+    2. Usage .......................... |PyutUsage|
+    3. Configuration .................. |PyutConfig|
+    4. Shell Support .................. |ShellSupport|
+    5. License ........................ |PyutLicense|
+    6. Bugs ........................... |PyutBugs|
+    7. Credits ........................ |PyutCredits|
+
+==============================================================================
+1. Intro                                                          *PyutIntro*
+
+A simple way of running single or multiple python unit tests from within VIM
+based on the cursor location.
 
 Useful for receiving immediate feedback as you write tests, despite what test
 runner or framework your project uses to run its tests.
 
+==============================================================================
+2. Usage                                                          *PyutUsage*
 
-This project was originally derived from Alfredo Deza's pytest.vim. Which is
-more focused on soley running py.test unit tests. That project can be found
-here: https://github.com/alfredodeza/pytest.vim
-
-Usage
-=====
-
-This plugin provides a single command::
-
-    Pyut
-
-All arguments are able to be tab-completed.
-
-Python Objects
---------------
 For running tests the plugin provides 3 arguments with an optional one. 
 These arguments are::
 
@@ -66,17 +68,11 @@ commands like this into your .vimrc::
 
     au FileType python nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
 
-The 'au FileType python' ensures these mappings only occur in a python file. 
-
-Output
-------
-Output is displayed in a scratch buffer. The previous test session display can
-be toggled with::
-    
-    :Pyut session
+The 'au FileType python' ensures these 
 
 
-Configuration
+==============================================================================
+3. Configuration                                                *PyutConfig*
 -------------
 Pyut is configured to work with nosetests by default, however, using pyut with 
 other unit tests runners is simple. Just set the necessary variables in your
@@ -94,23 +90,16 @@ the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod
 for the example above where the first '::' is the class_delimiter and the second
 is the method_delimiter
 
-Shell Support
--------------
+==============================================================================
+4. Shell Support                                                *ShellSupport*
+
 This plugin provides a way to have a better shell experience when running
 `verbose` or `pdb` flags by using the `Conque.vim` plugin. If you have this
 most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?script_id=2771)
-then `pyut.vim` will use that instead of Vim's own dumb shell environment.
+then `pytest.vim` will use that instead of Vim's own dumb shell environment.
 
-`clear`
--------
-If for some reason you need to reset and clear all global variables that affect
-the plugin you can do so by running the following command::
-
-    :Pyut clear
-
-
-License
--------
+==============================================================================
+5. License                                                     *PyutLicense*
 
 MIT
 Copyright (c) 2011 Alex Meade <hatboy112 [at] yahoo [dot] com>
@@ -133,9 +122,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+==============================================================================
+6. Bugs                                                            *PyutBugs*
 
-Attribution
--------
+If you find a bug please post it on the issue tracker:
+https://github.com/ameade/pyut-vim/issues
+
+==============================================================================
+7. Credits                                                      *PyutCredits*
+
+Thanks to Alfredo Deza for writing Pytest.vim, an easy to use VIM plugin for
+running py.test unit tests as conveniently as possible.
 
 The core functionality of this plugin was brought over from pytest.vim
 Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
+
+==============================================================================
