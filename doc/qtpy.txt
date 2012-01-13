@@ -1,19 +1,19 @@
-*pytest.txt*  Plugin for running python unit tests in vim
+*qtpy.txt*  Plugin for running python unit tests in vim
 
 Simple approach to visual selection of Python blocks.
 ==============================================================================
 CONTENTS                                                      *Pytest-contents*
 
-    1. Intro .......................... |PyutIntro|
-    2. Usage .......................... |PyutUsage|
-    3. Configuration .................. |PyutConfig|
+    1. Intro .......................... |QTPYIntro|
+    2. Usage .......................... |QTPYUsage|
+    3. Configuration .................. |QTPYConfig|
     4. Shell Support .................. |ShellSupport|
-    5. License ........................ |PyutLicense|
-    6. Bugs ........................... |PyutBugs|
-    7. Credits ........................ |PyutCredits|
+    5. License ........................ |QTPYLicense|
+    6. Bugs ........................... |QTPYBugs|
+    7. Credits ........................ |QTPYCredits|
 
 ==============================================================================
-1. Intro                                                          *PyutIntro*
+1. Intro                                                          *QTPYIntro*
 
 A simple way of running single or multiple python unit tests from within VIM
 based on the cursor location.
@@ -22,7 +22,7 @@ Useful for receiving immediate feedback as you write tests, despite what test
 runner or framework your project uses to run its tests.
 
 ==============================================================================
-2. Usage                                                          *PyutUsage*
+2. Usage                                                          *QTPYUsage*
 
 For running tests the plugin provides 3 arguments with an optional one. 
 These arguments are::
@@ -38,7 +38,7 @@ or the whole file.
 If you are in a class and want to run all the tests for that class, you would
 call this plugin like::
 
-    :Pyut class
+    :QTPY class
 
 Whenever a command is triggered a small message displays informing you that
 the plugin is running a certain action. In the above call, you would see 
@@ -46,11 +46,11 @@ something like this::
 
     Running tests for class TestMyClass
 
-If you would like to see the complete pyut output you can add an optional `verbose`
-flag to any of the commands for Pyut. For the previous command, it would
+If you would like to see the complete qtpy output you can add an optional `verbose`
+flag to any of the commands for QTPY. For the previous command, it would
 look like::
 
-    :Pyut class verbose
+    :QTPY class verbose
 
 This would open a split scratch buffer that you can fully interact with. You
 can close this buffer with ':wq' or you can hit 'q' at any moment in that buffer
@@ -59,31 +59,31 @@ to close it.
 When tests are successful a green bar appears. If you have any number of fails
 you get a red bar with a line-by-line list of line numbers and errors.
 
-I recommend mapping keys to Pyut commands for easy running. To do so, insert
+I recommend mapping keys to QTPY commands for easy running. To do so, insert
 commands like this into your .vimrc::
 
-    " Pyut
-    au FileType python nnoremap <F8> :Pyut method verbose<CR>
-    au FileType python nnoremap <F9> :Pyut session<CR>
+    " qtpy
+    au FileType python nnoremap <F8> :QTPY method verbose<CR>
+    au FileType python nnoremap <F9> :QTPY session<CR>
 
-    au FileType python nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
+    au FileType python nnoremap <silent><Leader>c <Esc>:QTPY class verbose<CR>
 
 The 'au FileType python' ensures these 
 
 
 ==============================================================================
-3. Configuration                                                *PyutConfig*
+3. Configuration                                                *QTPYConfig*
 -------------
-Pyut is configured to work with nosetests by default, however, using pyut with 
+qtpy is configured to work with nosetests by default, however, using qtpy with 
 other unit tests runners is simple. Just set the necessary variables in your
 vimrc. 
 
-For example, insert these lines into your .vimrc to use Pyut with Py.Test::
+For example, insert these lines into your .vimrc to use QTPY with Py.Test::
 
     " for use with Py.Test
-    let g:pyut_shell_command = "py.test --tb=short" "py.tests
-    let g:pyut_class_delimiter = "::"
-    let g:pyut_method_delimiter = "::"
+    let g:qtpy_shell_command = "py.test --tb=short" "py.tests
+    let g:qtpy_class_delimiter = "::"
+    let g:qtpy_method_delimiter = "::"
 
 The delimiter variables are used with constructing the test path to pass into
 the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod"
@@ -99,7 +99,7 @@ most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?s
 then `pytest.vim` will use that instead of Vim's own dumb shell environment.
 
 ==============================================================================
-5. License                                                     *PyutLicense*
+5. License                                                     *QTPYLicense*
 
 MIT
 Copyright (c) 2011 Alex Meade <hatboy112 [at] yahoo [dot] com>
@@ -123,13 +123,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ==============================================================================
-6. Bugs                                                            *PyutBugs*
+6. Bugs                                                            *QTPYBugs*
 
 If you find a bug please post it on the issue tracker:
-https://github.com/ameade/pyut-vim/issues
+https://github.com/ameade/qtpy-vim/issues
 
 ==============================================================================
-7. Credits                                                      *PyutCredits*
+7. Credits                                                      *QTPYCredits*
 
 Thanks to Alfredo Deza for writing Pytest.vim, an easy to use VIM plugin for
 running py.test unit tests as conveniently as possible.

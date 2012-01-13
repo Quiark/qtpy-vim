@@ -1,4 +1,4 @@
-pyut.vim
+qtpy.vim
 ==========
 A simple way of running python unit tests from within VIM based on the cursor
 location.
@@ -16,7 +16,7 @@ Usage
 
 This plugin provides a single command::
 
-    Pyut
+    QTPY
 
 All arguments are able to be tab-completed.
 
@@ -36,7 +36,7 @@ or the whole file.
 If you are in a class and want to run all the tests for that class, you would
 call this plugin like::
 
-    :Pyut class
+    :QTPY class
 
 Whenever a command is triggered a small message displays informing you that
 the plugin is running a certain action. In the above call, you would see 
@@ -44,11 +44,11 @@ something like this::
 
     Running tests for class TestMyClass
 
-If you would like to see the complete pyut output you can add an optional `verbose`
-flag to any of the commands for Pyut. For the previous command, it would
+If you would like to see the complete qtpy output you can add an optional `verbose`
+flag to any of the commands for qtpy. For the previous command, it would
 look like::
 
-    :Pyut class verbose
+    :QTPY class verbose
 
 This would open a split scratch buffer that you can fully interact with. You
 can close this buffer with ':wq' or you can hit 'q' at any moment in that buffer
@@ -57,14 +57,14 @@ to close it.
 When tests are successful a green bar appears. If you have any number of fails
 you get a red bar with a line-by-line list of line numbers and errors.
 
-I recommend mapping keys to Pyut commands for easy running. To do so, insert
+I recommend mapping keys to qtpy commands for easy running. To do so, insert
 commands like this into your .vimrc::
 
-    " Pyut
-    au FileType python nnoremap <F8> :Pyut method verbose<CR>
-    au FileType python nnoremap <F9> :Pyut session<CR>
+    " QTPY
+    au FileType python nnoremap <F8> :QTPY method verbose<CR>
+    au FileType python nnoremap <F9> :QTPY session<CR>
 
-    au FileType python nnoremap <silent><Leader>c <Esc>:Pyut class verbose<CR>
+    au FileType python nnoremap <silent><Leader>c <Esc>:QTPY class verbose<CR>
 
 The 'au FileType python' ensures these mappings only occur in a python file. 
 
@@ -73,21 +73,21 @@ Output
 Output is displayed in a scratch buffer. The previous test session display can
 be toggled with::
     
-    :Pyut session
+    :QTPY session
 
 
 Configuration
 -------------
-Pyut is configured to work with nosetests by default, however, using pyut with 
+qtpy is configured to work with nosetests by default, however, using qtpy with 
 other unit tests runners is simple. Just set the necessary variables in your
 vimrc. 
 
-For example, insert these lines into your .vimrc to use Pyut with Py.Test::
+For example, insert these lines into your .vimrc to use QTPY with Py.Test::
 
     " for use with Py.Test
-    let g:pyut_shell_command = "py.test --tb=short" "py.tests
-    let g:pyut_class_delimiter = "::"
-    let g:pyut_method_delimiter = "::"
+    let g:qtpy_shell_command = "py.test --tb=short" "py.tests
+    let g:qtpy_class_delimiter = "::"
+    let g:qtpy_method_delimiter = "::"
 
 The delimiter variables are used with constructing the test path to pass into
 the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod"
@@ -99,14 +99,14 @@ Shell Support
 This plugin provides a way to have a better shell experience when running
 `verbose` or `pdb` flags by using the `Conque.vim` plugin. If you have this
 most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?script_id=2771)
-then `pyut.vim` will use that instead of Vim's own dumb shell environment.
+then `qtpy.vim` will use that instead of Vim's own dumb shell environment.
 
 `clear`
 -------
 If for some reason you need to reset and clear all global variables that affect
 the plugin you can do so by running the following command::
 
-    :Pyut clear
+    :QTPY clear
 
 
 License
