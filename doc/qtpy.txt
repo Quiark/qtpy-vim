@@ -24,6 +24,9 @@ runner or framework your project uses to run its tests.
 ==============================================================================
 2. Usage                                                          *QTPYUsage*
 
+To use this plugin, make sure ftplugins are enabled, via "filetype on" in your
+.vimrc.
+
 For running tests the plugin provides 3 arguments with an optional one. 
 These arguments are::
 

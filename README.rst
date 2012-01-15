@@ -13,6 +13,8 @@ here: https://github.com/alfredodeza/pytest.vim
 
 Usage
 =====
+To use this plugin, make sure ftplugins are enabled, via "filetype on" in your
+.vimrc.
 
 This plugin provides a single command::
 
