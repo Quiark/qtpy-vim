@@ -139,7 +139,6 @@ function! s:LastSession()
     silent! execute 'normal! G'
     nnoremap <silent> <buffer> q       :call <sid>ClearAll(1)<CR>
     nnoremap <silent> <buffer> <Enter> :call <sid>ClearAll(1)<CR>
-    exe 'wincmd p'
 endfunction
 
 
