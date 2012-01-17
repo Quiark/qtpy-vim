@@ -1,6 +1,5 @@
-*qtpy.txt*  Plugin for running python unit tests in vim
+qtpy.txt  Plugin for running python unit tests in vim
 
-Simple approach to visual selection of Python blocks.
 ==============================================================================
 CONTENTS                                                      *Pytest-contents*
 
@@ -98,7 +97,8 @@ is the method_delimiter
 
 This plugin provides a way to have a better shell experience when running
 `verbose` or `pdb` flags by using the `Conque.vim` plugin. If you have this
-most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?script_id=2771)
+most excellent piece of Vim plugin
+(see: http://www.vim.org/scripts/script.php?script_id=2771)
 then `pytest.vim` will use that instead of Vim's own dumb shell environment.
 
 ==============================================================================
@@ -141,3 +141,4 @@ The core functionality of this plugin was brought over from pytest.vim
 Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
 
 ==============================================================================
+ vim:tw=78:et:ft=help:norl:
