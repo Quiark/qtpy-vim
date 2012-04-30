@@ -155,6 +155,7 @@ endfunction
 
 
 function! s:ClearAll(...)
+    let current = winnr()
     let bufferL = [ 'LastSession.qtpy', 'Verbose.qtpy' ]
     for b in bufferL
         let _window = bufwinnr(b)
@@ -169,6 +170,8 @@ function! s:ClearAll(...)
         " and remove any left messages
         call s:Echo('')
         silent! execute 'wincmd p'
+    else
+        execute current . 'wincmd w'
     endif
 endfunction
 
