@@ -21,6 +21,10 @@ if(!exists("g:qtpy_method_delimiter"))
     let g:qtpy_method_delimiter = "."
 endif
 
+if(!exists("g:qtpy_use_abs_path"))
+    let g:qtpy_use_abs_path = "true"
+endif
+
 
 " Global variables
 let g:qtpy_last_session      = ""
@@ -218,8 +222,12 @@ endfunction
 function! s:GetPath(action, ...)
     let save_cursor = getpos('.')
     call s:ClearAll()
-    let abspath     = s:CurrentPath()
     let toReturn = ""
+    if (g:qtpy_use_abs_path == "true")
+        let toReturn = s:CurrentPath()
+    else
+        let toReturn = strpart(split(s:CurrentPath(), "/")[-1], 0, -3)
+    endif
 
     if (a:action == "class")
         let c_name = s:NameOfCurrentClass()
@@ -228,7 +236,7 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        let toReturn = abspath . g:qtpy_class_delimiter . c_name
+        let toReturn = toReturn . g:qtpy_class_delimiter . c_name
 
     elseif (a:action == "method")
         let c_name = s:NameOfCurrentClass()
@@ -242,10 +250,10 @@ function! s:GetPath(action, ...)
             call s:Echo("Unable to find a matching class for testing")
             return ""
         endif
-        let toReturn = abspath . g:qtpy_class_delimiter . c_name . g:qtpy_method_delimiter . m_name
+        let toReturn = toReturn . g:qtpy_class_delimiter . c_name . g:qtpy_method_delimiter . m_name
 
     elseif (a:action == "file")
-        let toReturn =  abspath
+        let toReturn =  ToReturn
     endif
 
     return " " . toReturn
