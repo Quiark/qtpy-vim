@@ -87,7 +87,7 @@ vimrc.
 For example, insert these lines into your .vimrc to use QTPY with Py.Test::
 
     " for use with Py.Test
-    let g:qtpy_shell_command = "py.test --tb=short" "py.tests
+    let g:qtpy_shell_command = "py.test --tb=short"
     let g:qtpy_class_delimiter = "::"
     let g:qtpy_method_delimiter = "::"
     let g:qtpy_use_abs_path = "true"
