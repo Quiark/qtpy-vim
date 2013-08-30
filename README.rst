@@ -90,7 +90,7 @@ For example, insert these lines into your .vimrc to use QTPY with Py.Test::
     let g:qtpy_shell_command = "py.test --tb=short" "py.tests
     let g:qtpy_class_delimiter = "::"
     let g:qtpy_method_delimiter = "::"
-    let g:qtpy_use_abs_path = "false"
+    let g:qtpy_use_abs_path = "true"
 
 The delimiter variables are used with constructing the test path to pass into
 the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod"
