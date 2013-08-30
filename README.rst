@@ -110,7 +110,7 @@ License
 -------
 
 MIT
-Copyright (c) 2011 Alex Meade <hatboy112 [at] yahoo [dot] com>
+Copyright (c) 2011-2013 Alex Meade <mr.alex.meade [at] gmail [dot] com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
