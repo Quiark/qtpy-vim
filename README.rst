@@ -6,11 +6,6 @@ location.
 Useful for receiving immediate feedback as you write tests, despite what test
 runner or framework your project uses to run its tests.
 
-
-This project was originally derived from Alfredo Deza's pytest.vim. Which is
-more focused on soley running py.test unit tests. That project can be found
-here: https://github.com/alfredodeza/pytest.vim
-
 Usage
 =====
 To use this plugin, make sure ftplugins are enabled, via "filetype on" in your
@@ -139,5 +134,7 @@ THE SOFTWARE.
 Attribution
 -------
 
-The core functionality of this plugin was brought over from pytest.vim
+The core functionality of this plugin was brought over from pytest.vim. Which is
+more focused on soley running py.test unit tests. That project can be found
+here: https://github.com/alfredodeza/pytest.vim
 Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
