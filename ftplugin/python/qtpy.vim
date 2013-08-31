@@ -277,7 +277,7 @@ endfunction
 function! s:Completion(ArgLead, CmdLine, CursorPos)
     let test_objects = "class\nmethod\nfile\n"
     let optional     = "verbose\nclear\n"
-    let reports      = "fails\nsession\nend\n"
+    let reports      = "session\n"
     let pyversion    = "version\n"
     return test_objects . reports . optional . pyversion
 endfunction
@@ -298,8 +298,6 @@ function! s:Proxy(action, ...)
         call s:RunTests(verbose, a:action)
     elseif (a:action == "file")
         call s:RunTests(verbose, a:action)
-    elseif (a:action == "fails")
-        call s:ToggleFailWindow()
     elseif (a:action == "session")
         call s:ToggleLastSession()
     elseif (a:action == "clear")
