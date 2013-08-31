@@ -11,35 +11,26 @@ Usage
 To use this plugin, make sure ftplugins are enabled, via "filetype on" in your
 .vimrc.
 
-This plugin provides a single command::
-
-    QTPY
-
-All arguments are able to be tab-completed.
-
-Python Objects
---------------
-For running tests the plugin provides 3 arguments with an optional one. 
-These arguments are::
-
-    class
-    method
-    file
-
-
-As you may expect, those will focus on the tests for the current class, method,
-or the whole file.
-
-If you are in a class and want to run all the tests for that class, you would
-call this plugin like::
-
-    :QTPY class
-
 Whenever a command is triggered a small message displays informing you that
 the plugin is running a certain action. In the above call, you would see 
 something like this::
 
-    Running tests for class TestMyClass
+    Running tests for class
+
+When tests are successful a green bar appears. If you have any number of fails
+you get a red bar with a line-by-line list of line numbers and errors.
+
+Run all tests in current file::
+
+    :QTPY file
+
+Run all tests in current class::
+
+    :QTPY class
+
+Run current test at cursor location::
+
+    :QTPY method
 
 If you would like to see the complete qtpy output you can add an optional `verbose`
 flag to any of the commands for qtpy. For the previous command, it would
@@ -51,27 +42,14 @@ This would open a split scratch buffer that you can fully interact with. You
 can close this buffer with ':wq' or you can hit 'q' at any moment in that buffer
 to close it.
 
-When tests are successful a green bar appears. If you have any number of fails
-you get a red bar with a line-by-line list of line numbers and errors.
-
-I recommend mapping keys to qtpy commands for easy running. To do so, insert
-commands like this into your .vimrc::
-
-    " QTPY
-    au FileType python nnoremap <F8> :QTPY method verbose<CR>
-    au FileType python nnoremap <F9> :QTPY session<CR>
-
-    au FileType python nnoremap <silent><Leader>c <Esc>:QTPY class verbose<CR>
-
-The 'au FileType python' ensures these mappings only occur in a python file. 
-
-Output
-------
-Output is displayed in a scratch buffer. The previous test session display can
-be toggled with::
+The previous test session display can be toggled with::
     
     :QTPY session
 
+If for some reason you need to reset and clear all global variables that affect
+the plugin you can do so by running the following command::
+
+    :QTPY clear
 
 Configuration
 -------------
@@ -91,19 +69,23 @@ the test runner. Such as "py.test /testfolder/testfile.py::TestClass::TestMethod
 for the example above where the first '::' is the class_delimiter and the second
 is the method_delimiter
 
+I recommend mapping keys to qtpy commands for easy running. To do so, insert
+commands like this into your .vimrc::
+
+    " QTPY
+    au FileType python nnoremap <F8> :QTPY method verbose<CR>
+    au FileType python nnoremap <F9> :QTPY session<CR>
+
+    au FileType python nnoremap <silent><Leader>c <Esc>:QTPY class verbose<CR>
+
+The 'au FileType python' ensures these mappings only occur in a python file. 
+
 Shell Support
 -------------
 This plugin provides a way to have a better shell experience when running
-`verbose` or `pdb` flags by using the `Conque.vim` plugin. If you have this
+`verbose` flag by using the `Conque.vim` plugin. If you have this
 most excellent piece of Vim plugin (see: http://www.vim.org/scripts/script.php?script_id=2771)
 then `qtpy.vim` will use that instead of Vim's own dumb shell environment.
-
-`clear`
--------
-If for some reason you need to reset and clear all global variables that affect
-the plugin you can do so by running the following command::
-
-    :QTPY clear
 
 
 License
