@@ -6,6 +6,8 @@ location.
 Useful for receiving immediate feedback as you write tests, despite what test
 runner or framework your project uses to run its tests.
 
+http://www.vim.org/scripts/script.php?script_id=3888
+
 Usage
 =====
 To use this plugin, make sure ftplugins are enabled, via "filetype on" in your
