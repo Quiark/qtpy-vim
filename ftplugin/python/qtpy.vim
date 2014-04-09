@@ -21,6 +21,9 @@ if(!exists("g:qtpy_method_delimiter"))
     let g:qtpy_method_delimiter = "."
 endif
 
+if (!exists("g:qtpy_debugger"))
+	let g:qtpy_debugger = ""
+endif
 
 " Global variables
 let g:qtpy_last_session      = ""
@@ -100,7 +103,7 @@ endfunction
 
 
 function! s:RunInSplitWindow(path)
-    let cmd = g:qtpy_shell_command . a:path
+    let cmd = g:qtpy_debugger . ' ' . g:qtpy_shell_command . a:path
     if exists("g:ConqueTerm_Loaded")
         call conque_term#open(cmd, ['split', 'resize 20'], 0)
     else
@@ -111,6 +114,7 @@ function! s:RunInSplitWindow(path)
 
         let out = system(command)
         let g:qtpy_last_session   = out
+		cexpr out
         let session = split(g:qtpy_last_session, '\n')
         call append(0, session)
         silent! execute 'resize ' . line('$')
@@ -184,9 +188,10 @@ endfunction!
 
 function! s:RunPyTest(path)
     let g:qtpy_last_session = ""
-    let cmd = g:qtpy_shell_command . a:path
+    let cmd = g:qtpy_debugger . ' ' .g:qtpy_shell_command . a:path
     let out = system(cmd)
     let g:qtpy_last_session   = out
+	cexpr out
 
     if v:shell_error
         call s:RedBar()
@@ -313,3 +318,4 @@ endfunction
 
 command! -nargs=+ -complete=custom,s:Completion QTPY call s:Proxy(<f-args>)
 
+let g:loaded_qtpy=1
