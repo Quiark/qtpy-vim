@@ -187,9 +187,13 @@ endfunction!
 
 
 function! s:RunPyTest(path)
+    let g:qtpy_last_cmd = g:qtpy_debugger . ' ' .g:qtpy_shell_command . a:path
+	call s:RunTestCommand(g:qtpy_last_cmd)
+endfunction
+
+function! s:RunTestCommand(cmd)
     let g:qtpy_last_session = ""
-    let cmd = g:qtpy_debugger . ' ' .g:qtpy_shell_command . a:path
-    let out = system(cmd)
+    let out = system(a:cmd)
     let g:qtpy_last_session   = out
 	cexpr out
 
@@ -199,7 +203,7 @@ function! s:RunPyTest(path)
     endif
 
     call s:GreenBar()
-endfunction
+endfun
 
 
 function! s:RedBar()
@@ -275,12 +279,12 @@ endfunction
 
 
 function! s:Version()
-    call s:Echo("qtpy.vim version 0.4.2dev", 1)
+    call s:Echo("qtpy.vim version 0.5dev", 1)
 endfunction
 
 
 function! s:Completion(ArgLead, CmdLine, CursorPos)
-    let test_objects = "class\nmethod\nfile\n"
+    let test_objects = "class\nmethod\nfile\nlast\n"
     let optional     = "verbose\nclear\n"
     let reports      = "session\n"
     let pyversion    = "version\n"
@@ -303,6 +307,8 @@ function! s:Proxy(action, ...)
         call s:RunTests(verbose, a:action)
     elseif (a:action == "file")
         call s:RunTests(verbose, a:action)
+    elseif (a:action == "last")
+        call s:RunTestCommand(g:qtpy_last_cmd)
     elseif (a:action == "session")
         call s:ToggleLastSession()
     elseif (a:action == "clear")
