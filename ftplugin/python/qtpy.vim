@@ -21,8 +21,8 @@ if(!exists("g:qtpy_method_delimiter"))
     let g:qtpy_method_delimiter = "."
 endif
 
-if (!exists("g:qtpy_debugger"))
-	let g:qtpy_debugger = ""
+if (!exists("g:qtpy_debug"))
+	let g:qtpy_debug = 0
 endif
 
 " Global variables
@@ -102,28 +102,6 @@ function! s:CurrentPath()
 endfunction
 
 
-function! s:RunInSplitWindow(path)
-    let cmd = g:qtpy_debugger . ' ' . g:qtpy_shell_command . a:path
-    if exists("g:ConqueTerm_Loaded")
-        call conque_term#open(cmd, ['split', 'resize 20'], 0)
-    else
-        let command = join(map(split(cmd), 'expand(v:val)'))
-        let winnr = bufwinnr('LastSession.qtpy')
-        silent! execute  winnr < 0 ? 'botright new ' . 'LastSession.qtpy' : winnr . 'wincmd w'
-        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number filetype=qtpy
-
-        let out = system(command)
-        let g:qtpy_last_session   = out
-		cexpr out
-        let session = split(g:qtpy_last_session, '\n')
-        call append(0, session)
-        silent! execute 'resize ' . line('$')
-        " Do both commands so the last line of output is flush with bottom
-        silent! execute 'normal! gg'
-        silent! execute 'normal! G'
-        silent! execute 'nnoremap <silent> <buffer> q :q! <CR>'
-    endif
-endfunction
 
 
 function! s:LastSession()
@@ -187,7 +165,7 @@ endfunction!
 
 
 function! s:RunPyTest(path)
-    let g:qtpy_last_cmd = g:qtpy_debugger . ' ' .g:qtpy_shell_command . a:path
+	let g:qtpy_last_cmd = pyeval("openterm.nosetests_cmd('''".a:path."''',".g:qtpy_debug.")")
 	call s:RunTestCommand(g:qtpy_last_cmd)
 endfunction
 
@@ -271,7 +249,7 @@ function! s:RunTests(verbose, action, ...)
     endif
 
     if (a:verbose == 1)
-        call s:RunInSplitWindow(abspath)
+
     else
         call s:RunPyTest(abspath)
     endif
